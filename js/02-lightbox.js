@@ -5,6 +5,8 @@ const gallery = document.querySelector(".gallery");
 const items = [];
 
 galleryItems.forEach((element) => {
+    const galleryItem = document.createElement("li");
+    galleryItem.className = "gallery__item";
     const galleryLink = document.createElement("a");
     galleryLink.className = "gallery__link";
     galleryLink.href = element.original;
@@ -13,12 +15,16 @@ galleryItems.forEach((element) => {
     galleryImage.src = element.preview;
     galleryImage.setAttribute("title", element.description);
     galleryImage.alt = element.description;
+    galleryItem.append(galleryLink);
     galleryLink.append(galleryImage);
-    items.push(galleryLink);
+    items.push(galleryItem);
 });
+
 gallery.append(...items);
 
 new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionPosition: "bottom",
     captionDelay: 250,
 });
 

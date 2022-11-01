@@ -1,6 +1,5 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-console.log(galleryItems);
 
 const gallery = document.querySelector(".gallery");
 const items = [];
@@ -28,18 +27,34 @@ gallery.addEventListener("click", (elem) => {
         return;
     }
 
-    const selectedImage = elem.target.getAttribute("data-source");
     const instance = basicLightbox.create(
-        `<img src="${selectedImage}" width="800" height="600">`
+        `<img src=${elem.target.dataset.source}>`,
+        {
+            onShow: (instance) => { document.addEventListener("keydown", onModalCloseToEscape) },
+            onClose: (instance) => { document.removeEventListener("keydown", onModalCloseToEscape) },
+        }
     );
-
     instance.show();
-    gallery.addEventListener("keydown", (elem) => {
-        if (elem.key === "Escape") {
+
+    function onModalCloseToEscape(elem) {
+        if (elem.code === "Escape") {
             instance.close();
         }
-    });
+    }
 });
+
+//     const selectedImage = elem.target.getAttribute("data-source");
+//     const instance = basicLightbox.create(
+//         `<img src="${selectedImage}" width="800" height="600">`
+//     );
+
+//     instance.show();
+//     gallery.addEventListener("keydown", (elem) => {
+//         if (elem.key === "Escape") {
+//             instance.close();
+//         }
+//     });
+// });
 
 
 // Завдання 1 - галерея зображень
